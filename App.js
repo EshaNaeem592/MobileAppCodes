@@ -1,37 +1,51 @@
-import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, ImageBackground, TouchableOpacity, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const users = [
-  { id: '1', name: 'User 1' },
-  { id: '2', name: 'User 2' },
-  { id: '3', name: 'User 3' },
-  { id: '4', name: 'User 4' },
-  { id: '5', name: 'User 5' },
-];
+// Import the image from the assets folder
+import StoryImage from './assets/ShortStories.jpg';
+import CollectionScreen from './CollectionScreen'; // Import the CollectionScreen
+
+// Import your category screens
+import MoralShortStoriesScreen from './MoralShortStoriesScreen';
+import HorrorShortStoriesScreen from './HorrorShortStoriesScreen';
+import InspirationalShortStoriesScreen from './InspirationalShortStoriesScreen';
+import MotivationalShortStoriesScreen from './MotivationalShortStoriesScreen';
+import FunnyShortStoriesScreen from './FunnyShortStoriesScreen';
+
+const Stack = createStackNavigator(); // Create a stack navigator
 
 export default function App() {
-  const [selectedUser, setSelectedUser] = useState(null);
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Collection" component={CollectionScreen} />
+        {/* Add screens for other categories here */}
+        <Stack.Screen name="MoralShortStories" component={MoralShortStoriesScreen} />
+        <Stack.Screen name="HorrorShortStories" component={HorrorShortStoriesScreen} />
+        <Stack.Screen name="InspirationalShortStories" component={InspirationalShortStoriesScreen} />
+        <Stack.Screen name="MotivationalShortStories" component={MotivationalShortStoriesScreen} />
+        <Stack.Screen name="FunnyShortStories" component={FunnyShortStoriesScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
 
-  const openChat = (user) => {
-    setSelectedUser(user);
+function HomeScreen({ navigation }) {
+  const handleCollectionPress = () => {
+    // Navigate to the Collection screen when the button is pressed
+    navigation.navigate('Collection');
   };
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={users}
-        keyExtractor={(user) => user.id}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => openChat(item)} style={styles.userItem}>
-            <Text>{item.name}</Text>
-          </TouchableOpacity>
-        )}
-      />
-      {selectedUser && (
-        <View style={styles.chatContainer}>
-          <Text style={styles.chatText}>Chat with {selectedUser.name}</Text>
-        </View>
-      )}
+      <ImageBackground source={StoryImage} style={styles.image}>
+        <TouchableOpacity style={styles.button} onPress={handleCollectionPress}>
+          <Text style={styles.buttonText}> Collection</Text>
+        </TouchableOpacity>
+      </ImageBackground>
     </View>
   );
 }
@@ -39,20 +53,37 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
-  },
-  userItem: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  chatContainer: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  chatText: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  image: {
+    flex: 1,
+    resizeMode: 'cover',
+    width: '140%',
+    height: '110%',
+    marginRight: 200,
   },
-});
+  
+
+
+    button: {
+      padding: 10,
+      borderRadius: 5,
+     
+    },
+    buttonText: {
+      color: 'white',
+      fontSize: 31,
+      fontWeight: 'bold',
+      backgroundColor: 'grey',
+      margin: 105,
+      top: '80%',
+  
+    marginRight:240,
+    left:170
+    
+    },
+  });
+  
+
+
