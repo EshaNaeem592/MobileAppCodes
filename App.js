@@ -1,89 +1,69 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, TouchableOpacity, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Home from './Home';
+import Settings from './Settings';
+import DashboardScreen from './Dashboard';
+import HomeScreen from './HomeScreen';
+import DetailedScreen from './DetailedScreen';
 
-// Import the image from the assets folder
-import StoryImage from './assets/ShortStories.jpg';
-import CollectionScreen from './CollectionScreen'; // Import the CollectionScreen
 
-// Import your category screens
-import MoralShortStoriesScreen from './MoralShortStoriesScreen';
-import HorrorShortStoriesScreen from './HorrorShortStoriesScreen';
-import InspirationalShortStoriesScreen from './InspirationalShortStoriesScreen';
-import MotivationalShortStoriesScreen from './MotivationalShortStoriesScreen';
-import FunnyShortStoriesScreen from './FunnyShortStoriesScreen';
-
-const Stack = createStackNavigator(); // Create a stack navigator
+import LoginScreen from './LoginScreen';
+import SignupScreen from './SignupScreen'; // Import the new SignupScreen
 
 export default function App() {
+  const Stack = createNativeStackNavigator();
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Collection" component={CollectionScreen} />
-        {/* Add screens for other categories here */}
-        <Stack.Screen name="MoralShortStories" component={MoralShortStoriesScreen} />
-        <Stack.Screen name="HorrorShortStories" component={HorrorShortStoriesScreen} />
-        <Stack.Screen name="InspirationalShortStories" component={InspirationalShortStoriesScreen} />
-        <Stack.Screen name="MotivationalShortStories" component={MotivationalShortStoriesScreen} />
-        <Stack.Screen name="FunnyShortStories" component={FunnyShortStoriesScreen} />
+
+      <Stack.Navigator initialRouteName="DDD">
+      <Stack.Screen
+          name="DDD"
+          component={DashboardScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="LoginScreen"
+          component={LoginScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{
+            headerShown: true,
+          }}
+        />
+       
+        {/* Add the SignupScreen to the navigation stack */}
+        <Stack.Screen
+          name="SignupScreen"
+          component={SignupScreen}
+          options={{
+            headerShown: true,
+            title: 'Signup', // You can customize the header title here
+          }}
+        />
+        <Stack.Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{
+            headerShown: true,
+          }}
+        />
+        <Stack.Screen
+          name="DetailedScreen"
+          component={DetailedScreen}
+          options={{
+            headerShown: true,
+          }}
+         />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-function HomeScreen({ navigation }) {
-  const handleCollectionPress = () => {
-    // Navigate to the Collection screen when the button is pressed
-    navigation.navigate('Collection');
-  };
-
-  return (
-    <View style={styles.container}>
-      <ImageBackground source={StoryImage} style={styles.image}>
-        <TouchableOpacity style={styles.button} onPress={handleCollectionPress}>
-          <Text style={styles.buttonText}> Collection</Text>
-        </TouchableOpacity>
-      </ImageBackground>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  image: {
-    flex: 1,
-    resizeMode: 'cover',
-    width: '140%',
-    height: '110%',
-    marginRight: 200,
-  },
-  
-
-
-    button: {
-      padding: 10,
-      borderRadius: 5,
-     
-    },
-    buttonText: {
-      color: 'white',
-      fontSize: 31,
-      fontWeight: 'bold',
-      backgroundColor: 'grey',
-      margin: 105,
-      top: '80%',
-  
-    marginRight:240,
-    left:170
-    
-    },
-  });
-  
-
-
